@@ -8,6 +8,8 @@ public class LabPetProjectApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(LabPetProjectApplication.class, args);
+
+        
     }
 
 }
