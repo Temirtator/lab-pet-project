@@ -13,11 +13,23 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  app:
-    build: .
-    container_name: lab-pet-project
+  product-service:
+    build: ./product-service
+    container_name: product-service
     ports:
       - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/lab_pet_project
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+
+  delivery-service:
+    build: ./delivery-service
+    container_name: delivery-service
+    ports:
+      - "8081:8080"
     depends_on:
       - postgres
     environment:
