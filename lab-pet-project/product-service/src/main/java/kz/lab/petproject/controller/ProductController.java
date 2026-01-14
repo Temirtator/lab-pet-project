@@ -1,5 +1,7 @@
 package kz.lab.petproject.controller;
 
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import kz.lab.petproject.domain.Product;
 import kz.lab.petproject.service.ProductService;
 import org.springframework.web.bind.annotation.*;
@@ -8,6 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/products")
+@Tag(name = "Products", description = "Product management API")
 public class ProductController {
 
     private final ProductService service;
@@ -17,6 +20,7 @@ public class ProductController {
     }
 
     @PostMapping
+    @Operation(summary = "Create product and start delivery")
     public Product create(@RequestBody Product product) {
         return service.create(product);
     }
