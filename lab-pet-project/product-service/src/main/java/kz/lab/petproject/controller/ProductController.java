@@ -4,6 +4,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kz.lab.petproject.domain.Product;
 import kz.lab.petproject.service.ProductService;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -47,4 +48,10 @@ public class ProductController {
     public void delete(@PathVariable Long id) {
         service.delete(id);
     }
+
+    @GetMapping("/whoami")
+    public String whoami(Authentication authentication) {
+        return authentication.getName() + " " + authentication.getAuthorities();
+    }
+
 }
