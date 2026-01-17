@@ -4,9 +4,11 @@ import kz.lab.petproject.client.DeliveryClient;
 import kz.lab.petproject.client.dto.DeliveryRequest;
 import kz.lab.petproject.domain.Product;
 import kz.lab.petproject.repository.ProductRepository;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @Service
 public class ProductService {
@@ -29,8 +31,10 @@ public class ProductService {
         return saved;
     }
 
-    public List<Product> findAll() {
-        return repository.findAll();
+    @Async("productExecutor")
+    public CompletableFuture<List<Product>> getAllAsync() {
+        List<Product> products = repository.findAll();
+        return CompletableFuture.completedFuture(products);
     }
 
     public Product findById(Long id) {

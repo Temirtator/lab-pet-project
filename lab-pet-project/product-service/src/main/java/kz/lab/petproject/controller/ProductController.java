@@ -8,6 +8,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/products")
@@ -27,8 +28,8 @@ public class ProductController {
     }
 
     @GetMapping
-    public List<Product> findAll() {
-        return service.findAll();
+    public CompletableFuture<List<Product>> getAll() {
+        return service.getAllAsync();
     }
 
     @GetMapping("/{id}")
