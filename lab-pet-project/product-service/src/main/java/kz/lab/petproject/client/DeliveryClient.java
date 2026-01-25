@@ -1,13 +1,26 @@
 package kz.lab.petproject.client;
 
 import kz.lab.petproject.client.dto.DeliveryRequest;
-import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import reactor.core.publisher.Mono;
 
-@FeignClient(name = "delivery-service", url = "http://delivery-service:8081")
-public interface DeliveryClient {
+@Component
+public class DeliveryClient {
 
-    @PostMapping("/delivery")
-    void createDelivery(@RequestBody DeliveryRequest request);
+    private final WebClient webClient;
+
+    public DeliveryClient(@Value("${delivery.service.url:http://delivery-service:8081}") String baseUrl) {
+        this.webClient = WebClient.builder().baseUrl(baseUrl).build();
+    }
+
+    public Mono<Void> createDelivery(DeliveryRequest request) {
+        return webClient.post()
+                .uri("/delivery")
+                .bodyValue(request)
+                .retrieve()
+                .bodyToMono(Void.class)
+                .onErrorResume(e -> Mono.empty());
+    }
 }

@@ -6,9 +6,8 @@ import kz.lab.petproject.domain.Product;
 import kz.lab.petproject.service.ProductService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-import java.util.concurrent.CompletableFuture;
+import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @RestController
 @RequestMapping("/products")
@@ -23,22 +22,22 @@ public class ProductController {
 
     @PostMapping
     @Operation(summary = "Create product and start delivery")
-    public Product create(@RequestBody Product product) {
+    public Mono<Product> create(@RequestBody Product product) {
         return service.create(product);
     }
 
     @GetMapping
-    public CompletableFuture<List<Product>> getAll() {
-        return service.getAllAsync();
+    public Flux<Product> getAll() {
+        return service.getAll();
     }
 
     @GetMapping("/{id}")
-    public Product findById(@PathVariable Long id) {
+    public Mono<Product> findById(@PathVariable Long id) {
         return service.findById(id);
     }
 
     @PutMapping("/{id}")
-    public Product update(
+    public Mono<Product> update(
         @PathVariable Long id,
         @RequestBody Product product
     ) {
@@ -46,8 +45,8 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable Long id) {
-        service.delete(id);
+    public Mono<Void> delete(@PathVariable Long id) {
+        return service.delete(id);
     }
 
     @GetMapping("/whoami")
