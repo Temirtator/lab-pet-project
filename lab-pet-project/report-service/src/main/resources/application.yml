@@ -4,7 +4,15 @@ server:
 product:
   service:
     url: http://product-service:8080
+    username: admin
+    password: admin
 
 delivery:
   service:
     url: http://delivery-service:8081
+
+logging:
+  level:
+    kz.lab.reportservice: DEBUG
+    org.springframework.web.reactive.function.client.ExchangeFunctions: DEBUG
+    reactor.netty.http.client.HttpClient: DEBUG
