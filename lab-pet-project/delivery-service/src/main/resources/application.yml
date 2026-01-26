@@ -1,0 +1,24 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://postgres:5432/lab_pet_project
+    username: postgres
+    password: postgres
+
+  application:
+    name: delivery-service
+
+  flyway:
+    schemas: delivery
+    table: flyway_schema_history_delivery
+    enabled: true
+
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        default_schema: delivery
+
+server:
+  port: 8081

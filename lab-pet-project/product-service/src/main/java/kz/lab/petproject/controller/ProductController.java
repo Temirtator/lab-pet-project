@@ -2,7 +2,7 @@ package kz.lab.petproject.controller;
 
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import kz.lab.petproject.domain.Product;
+import kz.lab.petproject.entity.Product;
 import kz.lab.petproject.service.ProductService;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;

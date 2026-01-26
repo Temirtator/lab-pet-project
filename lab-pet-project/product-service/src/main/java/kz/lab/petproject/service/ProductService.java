@@ -2,7 +2,7 @@ package kz.lab.petproject.service;
 
 import kz.lab.petproject.client.DeliveryClient;
 import kz.lab.petproject.client.dto.DeliveryRequest;
-import kz.lab.petproject.domain.Product;
+import kz.lab.petproject.entity.Product;
 import kz.lab.petproject.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Flux;

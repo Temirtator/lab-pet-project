@@ -9,7 +9,7 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
@@ -21,6 +21,11 @@ services:
     depends_on:
       - postgres
     environment:
+      # use default R2DBC URL (no options) — migration creates table in public
+      SPRING_R2DBC_URL: r2dbc:postgresql://postgres:5432/lab_pet_project
+      SPRING_R2DBC_USERNAME: postgres
+      SPRING_R2DBC_PASSWORD: postgres
+
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/lab_pet_project
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
@@ -36,6 +41,22 @@ services:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/lab_pet_project
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
+      SPRING_FLYWAY_SCHEMAS: delivery
+      SPRING_FLYWAY_TABLE: flyway_schema_history_delivery
+
+  report-service:
+    build: ./report-service
+    container_name: report-service
+    ports:
+      - "8082:8082"
+    depends_on:
+      - postgres
+      - product-service
+      - delivery-service
+    environment:
+      SPRING_PROFILES_ACTIVE: default
+      SPRING_PRODUCT_SERVICE_URL: http://product-service:8080
+      SPRING_DELIVERY_SERVICE_URL: http://delivery-service:8081
 
 volumes:
   postgres_data:

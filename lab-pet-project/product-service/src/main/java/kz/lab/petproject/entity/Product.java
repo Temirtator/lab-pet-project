@@ -1,11 +1,11 @@
-package kz.lab.petproject.domain;
+package kz.lab.petproject.entity;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Table;
 import java.math.BigDecimal;
 
-@Table("products")
+@Table("product")
 @Schema(description = "Product creation request")
 public class Product {
 

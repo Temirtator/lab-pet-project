@@ -1,0 +1,10 @@
+server:
+  port: 8082
+
+product:
+  service:
+    url: http://product-service:8080
+
+delivery:
+  service:
+    url: http://delivery-service:8081
