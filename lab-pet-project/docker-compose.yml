@@ -13,6 +13,12 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+
   product-service:
     build: ./product-service
     container_name: product-service
@@ -37,12 +43,15 @@ services:
       - "8081:8081"
     depends_on:
       - postgres
+      - redis
     environment:
       SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/lab_pet_project
       SPRING_DATASOURCE_USERNAME: postgres
       SPRING_DATASOURCE_PASSWORD: postgres
       SPRING_FLYWAY_SCHEMAS: delivery
       SPRING_FLYWAY_TABLE: flyway_schema_history_delivery
+      SPRING_DATA_REDIS_HOST: redis
+      SPRING_DATA_REDIS_PORT: 6379
 
   report-service:
     build: ./report-service
